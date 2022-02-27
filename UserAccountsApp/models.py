@@ -19,7 +19,7 @@ class CustomUserManager(BaseUserManager):
         user.save(using=self._db)
         return user
 
-    def create_superuser(self, email, date_of_birth, first_name, password):
+    def create_superuser(self, email, date_of_birth, first_name, password=None):
         user = self.create_user(email=email, first_name=first_name, password=password, date_of_birth=date_of_birth)
         user.is_admin = True
         user.is_staff = True
@@ -68,9 +68,7 @@ class UserProfile(models.Model):
         ('Student', 'Student')
     )
     user = models.OneToOneField(CustomUser, on_delete= models.CASCADE, related_name = 'profile')
-    f_name = models.CharField(max_length=100)
     gender = models.CharField(max_length=50, choices=GENDER, default='Select Here')
-    date_of_birth = models.DateField(verbose_name='date of birth')
     profession = models.CharField(max_length=100, choices=PROFESSION, default='Select Here')
     academy = models.CharField(max_length=200)
     description = models.TextField()
